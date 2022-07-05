@@ -1,26 +1,25 @@
-name: Sample Orca IaC Scan Workflow
+name: IaC Scan Demo Pipeline
+
 on:
-  # Trigger the workflow on push request,
-  # but only for the main branch
   push:
     branches:
       - main
-jobs:
-  orca-iac_scan:
-    name: Orca IaC Scan
-    runs-on: ubuntu-latest
-      env:
-      PROJECT_KEY: <project key> # Set the desired project to run the cli scanning with
-    steps:
-      # Checkout your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
 
-      - name: Run Orca IaC Scan
-        uses: orcasecurity/shiftleft-iac-action@v1
-        with:
-          api_token: ${{ secrets.ORCA_SECURITY_API_TOKEN }}
-          project_key: ${{ env.PROJECT_KEY }}
+jobs:
+  orca-iac-scan-job:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Orca IaC Security Scan
+      uses: orcasecurity/shiftleft-iac-action@v1
+      with:
+          api_token:
+            ${{ secrets.ORCA_SECURITY_API_TOKEN }}
+          project_key:
+            "default"
           path:
-            # scanning directories: ./terraform/ ./sub-dir/ and a file: ./Dockerfile
-            "terraform,sub-dir,other-sub-dir/Dockerfile"
+            "iac"
