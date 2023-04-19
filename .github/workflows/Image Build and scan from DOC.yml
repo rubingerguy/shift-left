@@ -1,0 +1,30 @@
+name: Image Build and Scan
+
+on: [pull_request]
+
+jobs:
+  build-cli:
+    name: build-cli
+    runs-on: ubuntu-latest
+    env: 
+      IMAGE_NAME: alpine:latest
+      PROJECT_KEY: Guy_Github # Set the desired project to run the cli scanning with
+    
+    steps:
+    # checks-out your repository under $GitHub_WORKSPACE, so your workflow can access it.
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    # Build your docker image, that is going to be scanned in the next step
+    - name: Docker Image Build
+      run: docker build -t $IMAGE_NAME .
+  
+    # Run Orca CLI against the previously created container image
+    - name: Orca CLI - Security Scanning
+      env:
+        ORCA_SECURITY_API_TOKEN: ${{ secrets.ORCA_SECURITY_API_TOKEN }}
+      run: |
+        set +e
+        apt update && apt install -y curl
+        curl -sfL 'https://raw.GitHubusercontent.com/orcasecurity/orca-cli/main/install.sh' | bash
+        orca-cli -p "${PROJECT_KEY}" image scan ${IMAGE_NAME}
