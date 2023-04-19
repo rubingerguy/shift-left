@@ -21,4 +21,4 @@ jobs:
           project_key: default
           path:
             # scanning directories: ./terraform/ ./sub-dir/ and a file: ./Dockerfile
-            "./terra/"
+            "/terra/"
