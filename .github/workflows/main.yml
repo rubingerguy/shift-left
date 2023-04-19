@@ -1,30 +1,26 @@
-name: Image Build and Scan
-
+name: Sample Orca Container Image Scan Workflow
 on:
-
+  # Trigger the workflow on push request,
+  # but only for the main branch
+  push:
+    branches:
+      - main
 jobs:
-  build-cli:
-    name: build-cli
+  orca-container_scan:
+    name: Orca Container Image Scan
     runs-on: ubuntu-latest
-    env: 
-      IMAGE_NAME: alpine-latest
+    env:
       PROJECT_KEY: Guy_Github # Set the desired project to run the cli scanning with
-    
     steps:
-    # checks-out your repository under $GitHub_WORKSPACE, so your workflow can access it.
-    - name: Checkout
-      uses: actions/checkout@v2
-    
-    # Build your docker image, that is going to be scanned in the next step
-    - name: Docker Image Build
-      run: docker build -t $IMAGE_NAME .
-  
-    # Run Orca CLI against the previously created container image
-    - name: Orca CLI - Security Scanning
-      env:
-        ORCA_SECURITY_API_TOKEN: ${{ secrets.ORCA_SECURITY_API_TOKEN }}
-      run: |
-        set +e
-        apt update && apt install -y curl
-        curl -sfL 'https://raw.GitHubusercontent.com/orcasecurity/orca-cli/main/install.sh' | bash
-        orca-cli -p "${PROJECT_KEY}" image scan ${IMAGE_NAME}
+      # Checkout your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Run Orca Container Image Scan
+        uses: orcasecurity/shiftleft-container-image-action@v1
+        with:
+          api_token: ${{ secrets.ORCA_SECURITY_API_TOKEN }}
+          project_key: ${{ env.PROJECT_KEY }}
+          image: <image to scan>
+          output:
+            "results/"
