@@ -1,6 +1,6 @@
 name: Image Build and Scan
 
-on: Guy_Githubv1
+on:
 
 jobs:
   build-cli:
