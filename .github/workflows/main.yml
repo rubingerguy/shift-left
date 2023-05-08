@@ -1,4 +1,4 @@
-name: Sample Orca Container Image Scan Workflow
+name: Sample Orca Scan Workflow - rubingerser-Shift-left
 on:
   # Trigger the workflow on push request,
   # but only for the main branch
