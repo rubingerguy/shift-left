@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     env: 
       IMAGE_NAME: alpine:latest
-      PROJECT_KEY: Guy_Github # Set the desired project to run the cli scanning with
+      PROJECT_KEY: Github_Container_build # Set the desired project to run the cli scanning with
     
     steps:
     # checks-out your repository under $GitHub_WORKSPACE, so your workflow can access it.
