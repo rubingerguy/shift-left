@@ -1,4 +1,4 @@
-name: Sample Orca FS Scan Workflow
+name: BANKSERV DEMO SC
 on:
   # Trigger the workflow on push request,
   # but only for the main branch
