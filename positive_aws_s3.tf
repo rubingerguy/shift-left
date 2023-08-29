@@ -20,3 +20,4 @@ resource "aws_s3_bucket2" "positive2" {
     mfa_delete = true
   }
 }
+MY_AWS_SECRET = "AKIALALEMEL33EEXAMP445"
