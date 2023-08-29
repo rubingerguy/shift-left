@@ -18,4 +18,5 @@ resource "azurerm_sql_active_directory_administrator" "positive3" {
   login               = "sqladmin"
   tenant_id           = data.azurerm_client_config.current.tenant_id
   object_id           = data.azurerm_client_config.current.object_id
+#guy
 }
