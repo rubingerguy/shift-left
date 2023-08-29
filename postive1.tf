@@ -18,4 +18,19 @@ resource "azurerm_sql_active_directory_administrator" "positive3" {
   login               = "sqladmin"
   tenant_id           = data.azurerm_client_config.current.tenant_id
   object_id           = data.azurerm_client_config.current.object_id
+
+resource "azurerm_resource_group" "positive3" {
+  name     = "resourceGroup1"
+  location = "West US"
+}
+
+resource "azurerm_container_registry" "positive2" {
+  name                     = "containerRegistry1"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  sku                      = "Premium"
+  admin_enabled            = true
+  georeplication_locations = ["East US", "West Europe"]
+
+
 }
