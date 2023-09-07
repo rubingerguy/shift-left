@@ -45,3 +45,4 @@ resource "google_container_node_pool" "custom_node_pool" {
     image_type = "Ubuntu"
   }
 }
+#
