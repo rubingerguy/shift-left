@@ -1,4 +1,8 @@
-resource "azurerm_resource_group" "positive1" {
+
+
+
+
+object_id           = data.azurerm_client_config.current.object_idresource "azurerm_resource_group" "positive1" {
   name     = "acceptanceTestResourceGroup1"
   location = "West US"
 }
