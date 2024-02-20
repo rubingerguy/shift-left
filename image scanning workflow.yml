@@ -1,0 +1,22 @@
+# List of stages for jobs, and their order of execution
+stages:
+  - build-docker-image
+  - image-scan
+
+variables:
+  IMAGE_NAME: <image name>
+  PROJECT_KEY: <project key> # Set the desired project to run the cli scanning with
+
+build-docker-image:
+  # Build your docker image, which is going to be scanned in the next step
+  stage: build-docker-image
+  script:
+    - echo "building docker image..."
+    - docker build -t $IMAGE_NAME .
+
+image-scan:
+  # Run Orca CLI against the previously created container image
+  stage: image-scan
+  script:
+    - curl -sfL 'https://raw.githubusercontent.com/orcasecurity/orca-cli/main/install.sh' | sh
+    - orca-cli  -p "${PROJECT_KEY}" image scan ${IMAGE_NAME}
