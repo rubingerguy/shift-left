@@ -1,8 +1,7 @@
 name: MSDO
 on:
   push:
-    branches:
-      - master
+    branches: [ "main" ]
 
 jobs:
   sample:
